@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppShared", "WebAppShared\WebAppShared.csproj", "{442AB76B-EC01-4EB9-8091-EC50A36466F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppSharedTest", "WebAppSharedTest\WebAppSharedTest.csproj", "{4D76BEBA-7EF4-4239-8AF9-1328679250E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CAE9D31-213A-4C0D-BC07-480BCCCFB7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAE9D31-213A-4C0D-BC07-480BCCCFB7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAE9D31-213A-4C0D-BC07-480BCCCFB7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAE9D31-213A-4C0D-BC07-480BCCCFB7BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95B9CDDE-1ECF-403D-90DC-324D80C8C4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95B9CDDE-1ECF-403D-90DC-324D80C8C4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95B9CDDE-1ECF-403D-90DC-324D80C8C4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95B9CDDE-1ECF-403D-90DC-324D80C8C4C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442AB76B-EC01-4EB9-8091-EC50A36466F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442AB76B-EC01-4EB9-8091-EC50A36466F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442AB76B-EC01-4EB9-8091-EC50A36466F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442AB76B-EC01-4EB9-8091-EC50A36466F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D76BEBA-7EF4-4239-8AF9-1328679250E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D76BEBA-7EF4-4239-8AF9-1328679250E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D76BEBA-7EF4-4239-8AF9-1328679250E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D76BEBA-7EF4-4239-8AF9-1328679250E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
