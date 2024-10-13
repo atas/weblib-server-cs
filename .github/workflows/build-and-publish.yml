@@ -1,0 +1,86 @@
+name: .NET Core Build and Release
+
+on:
+  push:
+
+permissions:
+  packages: write
+  contents: write
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Cache FFmpeg
+        id: cache-ffmpeg
+        uses: actions/cache@v2
+        with:
+          path: ffmpeg/
+          key: ffmpeg-${{ runner.os }}
+
+      - name: Download FFmpeg
+        if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ffmpeg
+          wget -O ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+          tar xvf ffmpeg.tar.xz -C ffmpeg --strip-components=1
+
+      - name: Add FFmpeg into path
+        run: |
+          echo "$(pwd)/ffmpeg" >> $GITHUB_PATH
+
+      - name: Check FFmpeg Version
+        run: ffmpeg -version
+
+      - name: Restore dependencies and cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.fsproj', '**/*.vbproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Set next version
+        run: |
+          next_version=$(git for-each-ref --sort=-creatordate --format '%(refname:short)' refs/tags/v* | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | awk -F '.' '{print $1 "." $2 "." $3+1}')
+          next_version=${next_version#v}
+          echo "next_version=$next_version"
+          echo "next_version=$next_version" >> $GITHUB_ENV
+
+      - name: Commit msg
+        if: github.ref == 'refs/heads/main'
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "commit_msg=$commit_msg" >> $GITHUB_ENV
+
+      - name: Restore, Build and Test
+        run: |
+          dotnet restore
+          dotnet build --no-restore -c Release
+          # dotnet test --no-build --verbosity normal --filter FullyQualifiedName~Tests
+
+      - name: Pack
+        run: dotnet pack --no-build -c Release -o out /p:Version=$next_version
+
+      - name: Publish NuGet package to GitHub Packages
+        if: github.ref == 'refs/heads/main'
+        run: |
+          dotnet nuget push out/*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
+
+      - name: Commit bumped version
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "<actions@github.com>"
+          git tag -a "v$next_version" -m "Release $next_version\n $commit_msg"
+          git push origin "v$next_version"
