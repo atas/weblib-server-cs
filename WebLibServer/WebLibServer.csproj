@@ -13,7 +13,7 @@
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
     <PackageReference Include="FFMpegCore" Version="5.1.0" />
     <PackageReference Include="FirebaseAdmin" Version="3.0.0" />
-    <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
+    <PackageReference Include="HtmlSanitizer" Version="8.1.870" />
     <PackageReference Include="InfluxDB.Client" Version="4.15.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageReference Include="LinqKit" Version="1.3.0" />
